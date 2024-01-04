@@ -1,0 +1,311 @@
+Why to represent Texts into Vectors?
+
+Any kind of machine learning, deep learning or statistical learning platform understands only numbers.
+
+How to represent Texts into Vectors?
+
+Following techniques are available : 
+
+Bag of Words Model
+TF-IDF
+Word2Vec
+FastText
+GLOve
+BERT/SBERT
+
+
+Bag Of Words Model :
+
+How it works ::
+
+- Step 1 : Form Corpus
+
+	e.g. sentences = ['It was the best of times','it was the worst of times','it was the age of wisdom','it was the age of foolishness']
+	
+- Step 2 : Create Vocabulary : all unique tokens in corpus.
+
+	e.g. vocab = ['it', 'was', 'the', 'best', 'of', 'times', 'worst', 'age', 'wisdom', 'foolishness']
+	
+- Step 3 : Manage Vocabulary : 
+			Case lowering, 
+			Remove Punctuations and stopwords, 
+			Fix Misspelled words, 
+			Stem or lemma words,
+			Create N-Grams
+
+	e.g. unigram vocab = ['good', 'time', 'bad', 'age', 'wisdom', 'foolish']
+		 bigram vocab = ['good time', 'time bad', 'bad age', 'age wisdom', 'wisdom follish']
+	
+- Step 4 : Score all the tokens in each sentence. 
+	Scoring methods : 
+		binary(presence/absence) - Mark the presence of words.
+		e.g. 
+		
+		unigram vocab = ['good', 'time', 'bad', 'age', 'wisdom', 'foolish'] 
+		sentence = ['It was the best of times']
+		cleaned sentence = ['good time']
+		tokens = ['good', 'time']
+		vector = [1, 1, 0, 0, 0, 0] 
+		
+		count - Count the number of times each word appears in a document.
+		
+		e.g. 
+		
+		unigram vocab = ['good', 'time', 'bad', 'age', 'wisdom', 'foolish'] 
+		sentence = ['It was the best of times times']
+		cleaned sentence = ['good time time']
+		tokens = ['good', 'time', 'time']
+		vector = [1, 2, 0, 0, 0, 0] 
+		
+		
+		frequency - Calculate the frequency that each word appears in a document out of all the words in the document.
+		
+		e.g. 
+		
+		unigram vocab = ['good', 'time', 'bad', 'age', 'wisdom', 'foolish'] 
+		sentence = ['It was the best of times']
+		cleaned sentence = ['good time time']
+		tokens = ['good', 'time', 'time']
+		vector = [1/3, 2/3, 0, 0, 0, 0] 
+		
+		
+		
+- Step 5 : Represent each sentence as vector
+
+
+Pros ::
+
+1. Simple and easy to calculate
+2. Can Represent Text as vector
+
+Cons ::
+
+1. Order of words are not considered
+2. Context of words are not considered.
+3. Huge Vocabulary
+4. Sparse Vector Matrix
+
+TF-IDF Model :
+
+How it works ::
+
+- Step 1 : Form Corpus
+
+	e.g. sentences = ['It was the best of times','it was the worst of times','it was the age of wisdom','it was the age of foolishness']
+	
+- Step 2 : Create Vocabulary : all unique tokens in corpus.
+
+	e.g. vocab = ['it', 'was', 'the', 'best', 'of', 'times', 'worst', 'age', 'wisdom', 'foolishness']
+	
+- Step 3 : Manage Vocabulary : 
+			Case lowering, 
+			Remove Punctuations and stopwords, 
+			Fix Misspelled words, 
+			Stem or lemma words,
+			Create N-Grams
+
+	e.g. unigram vocab = ['good', 'time', 'bad', 'age', 'wisdom', 'foolish']
+		 bigram vocab = ['good time', 'time bad', 'bad age', 'age wisdom', 'wisdom follish']
+	
+- Step 4 : Score all the tokens in each sentence. 
+	Scoring methods : 
+		TF-IDF - Dot product of TF(Term Frequency) and IDF(Inverse Document Frequency).
+		TF = Frequency of token in a document, divided by the total number of tokens in that document.
+		IDF = Logarithm of total number of documents in the set divided by the total number of documents that contain the token.
+		e.g. 
+		
+		unigram vocab = ['good', 'time', 'bad', 'age', 'wisdom', 'foolish'] 
+		sentence = ['It was the best of times']
+		cleaned sentence = ['good time']
+		tokens = ['good', 'time']
+		TF = [1/2, 1/2, 0, 0, 0, 0]
+		IDF = [log(4/1), log(4/2), log(4/1), log(4/2), log(4/1), log(4/1)]
+		vector = [0.5*log(4), 0.5*log(2), 0, 0, 0, 0] 
+		
+		
+- Step 5 : Represent each sentence as vector
+
+
+Pros ::
+
+1. Simple and easy to calculate
+2. Can Represent Text as vector
+
+Cons ::
+
+1. Order of words are not considered.
+2. Context of words are not considered.
+3. Huge Vocabulary.
+4. Sparse Vector Matrix.
+
+Word2Vec Model :
+
+Shallow Neural network that predicts words from the given context.
+CBOW - Predict the centre word based on the context.
+SG - Predict the context word based on the centre word.
+
+Step 1 : Form Corpus
+
+	e.g. "Thou shalt not make a machine in the likeness of a human mind"
+	
+Step 2 : Slide on corpus and generate training samples.
+
+	e.g. window size = 3
+	
+	thou shalt not
+	shalt not make
+	not make a
+	make a machine
+	a machine in
+	machine in the
+	in the likeness
+	the likeness of
+	likeness of a 
+	of a human
+	a human mind
+	
+Step 3 : Decide on approach : CBOW or SG
+
+CBOW : Predict the centre word based on the context
+
+ip1 = though
+ip2 = not
+op = shalt
+
+SG : Predict the context word based on the centre word.
+
+ip1 = shalt
+op1 = though
+
+ip2 = shalt
+op2 = not
+
+Step 4 : Training
+4a) lookup embedding for the input token
+4b) Calc prediction : dot product of input token with all tokens in vocab.
+4c) apply sigmoid or softmax to sqaush the values bound between -1 and 1
+4d) apply argmax and ouput the token with max prob value
+4e) calc error between predicted output vector and actual output vector
+4f) update model parameters
+
+Cons : Computational heavy
+
+
+Step 4 : Revisit Training 
+
+ip1 = shalt
+ip1 = though
+op1 = 1
+
+ip2 = shalt
+ip2 = not
+op2 = 1
+
+to avoid model memorizing, introduce negative samples.
+else, ,model will ouput 1 for all samples.
+
+
+4a) Instantiate Embedding and context matrix with random values
+4b) look up matrices based on input and target words
+4c) dot product of both vectors to produce logits for all known tokens in vocab
+4d) apply sigmoid or softmax to sqaush the values bound between -1 and 1
+4e) calc error between predicted output value and actual output value
+4f) update model parameters
+
+Hyper parameters : window size = 5 (default) and negative samples = 5 (default)
+
+Pros ::
+
+1. Local Context of words are considered.
+2. Sacalable
+3. Good for analogies
+
+Cons ::
+
+1. limited by the size and quality of data
+2. polysemy words are not represented well.
+3. OOV words 
+4. Global context of words are not considered.
+5. Morphology : words with same radicals are not represented better.
+6. Opposite pairs : Words with opposite meanings sit closer in embedding space.
+
+FastText Model :
+
+Step 1 : Form Corpus
+
+	e.g. "Thou shalt not make a machine in the likeness of a human mind"
+	
+Step 2 : Slide on corpus and generate training samples.
+
+	e.g. window size = 3
+	
+	thou shalt not
+	shalt not make
+	not make a
+	make a machine
+	a machine in
+	machine in the
+	in the likeness
+	the likeness of
+	likeness of a 
+	of a human
+	a human mind
+	
+Step 3 : Decide on approach : CBOW or SG
+
+CBOW : Predict the centre word based on the context
+
+ip1 = though
+ip2 = not
+op = shalt
+
+SG : Predict the context word based on the centre word.
+
+ip1 = shalt
+op1 = though
+
+ip2 = shalt
+op2 = not
+
+Step 4 : Training 
+
+ip1 = shalt
+ip1 = though
+op1 = 1
+
+ip2 = shalt
+ip2 = not
+op2 = 1
+
+to avoid model memorizing, introduce negative samples.
+else, ,model will ouput 1 for all samples.
+
+
+4a) Instantiate Embedding and context matrix with random values
+4b.1) break down input word based on min_n and max_n parameters.
+4b.2) look up embedding matrix based on input word and break-down words to get vector and sum them all to get resultant vector.
+4b.3) look up context matrix based on target word to get vector.
+4c) dot product of both vectors to produce logits for all known tokens in vocab
+4d) apply sigmoid or softmax to sqaush the values bound between -1 and 1
+4e) calc error between predicted output value and actual output value
+4f) update model parameters
+
+Hyper parameters : window size = 5 (default) , negative samples = 5 (default), min_n = 3 (default) , max_n = 6 (default) , buckets = 2000000 (default)
+
+Pros ::
+
+1. Local Context of words are considered.
+2. Sacalable
+3. Good for syntactic analogies than semantic analogies
+4. OOV words are lesser due char n grams approach.
+5. Morphology : words with same radicals are represented better.
+
+Cons ::
+
+1. limited by the size and quality of data
+2. polysemy words are not represented well.
+3. OOV words are still available.
+4. Global context of words are not considered.
+5. Opposite pairs : Words with opposite meanings sit closer in embedding space.
+
+GLOve :
