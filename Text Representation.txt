@@ -309,3 +309,72 @@ Cons ::
 5. Opposite pairs : Words with opposite meanings sit closer in embedding space.
 
 GLOve :
+
+https://medium.com/analytics-vidhya/word-vectorization-using-glove-76919685ee0b
+https://paperswithcode.com/method/glove
+https://github.com/stanfordnlp/GloVe/tree/master/src
+https://machinelearninginterview.com/topics/natural-language-processing/what-is-the-difference-between-word2vec-and-glove/
+https://analyticsindiamag.com/hands-on-guide-to-word-embeddings-using-glove/
+
+Step 1 : Form corpus
+
+Step 2 : Clean corpus [optional limitations based on min_count or max_vocab_size , ignore stopwords]
+
+Step 3 : Form Vocab and calculate vocab_count.
+
+Step 4 : Build Co-Occurence matrix.
+
+Step 5 : Matrix Factorization : Ratio of probabilities of each word pair and iterate
+
+
+https://wandb.ai/authors/embeddings/reports/Word2Vec---VmlldzozMzIxNjQ
+https://wandb.ai/authors/embeddings-2/reports/An-Introduction-to-the-Global-Vectors-GloVe-Algorithm--VmlldzozNDg2NTQ
+https://becominghuman.ai/mathematical-introduction-to-glove-word-embedding-60f24154e54c [good for math functions]
+
+BERT:
+
+https://jalammar.github.io/illustrated-bert/
+https://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/
+https://github.com/huggingface/transformers/issues/1827
+
+
+Step 1 : Form corpus
+
+Step 2 : Load Pre-Trained Model Tokenizer
+
+Step 3 : Tokenize your sentences [wordpiece, byte-pair encoding, sentencepiece]
+
+Step 4 : Truncate your sentences
+
+Step 5 : Add Special Tokens
+
+Step 6 : Pad Tokens across all sentences or across batch of sentences.
+
+Step 7 : Encode tokens based on the LM vocab
+
+Step 8 : Feed prepared list of sentences to LM
+
+Step 9 : Know your model outputs 
+
+		--> Tuple Index[0]- last_hidden_state, 
+		--> Tuple Index[1] - all hidden states if output_hidden_states=True is set].
+
+		Know your model transformer blocks by outputting : model.transformer.layer
+		
+--------------------------------------------------------** below steps #10 to #14 are for sentence classification though **----------------------------------------
+
+Step 10 : Get Features to pass to LMHead [output.last_hidden_state[:,0,:].numpy()--> As we need only CLS token representation of last hidden state] 
+
+		output.last_hidden_state.shape
+		--> first index : All sentences
+		--> second index : max token count across all sentence or each batch
+		--> third index : hidden layer dims 
+	
+
+Step 11 : Feed to LMHead and train the classifier as usual.
+
+Step 12 : Get LMHead output by using output.logits 
+
+Step 13 : post process : pass it to softmax(dim=-1) to get the label index.
+
+Step 14 : post process : lookup model's label dict and get the appropriate label.
