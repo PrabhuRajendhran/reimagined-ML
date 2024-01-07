@@ -1,0 +1,252 @@
+Tokenization Methods : 
+
+Sentence Tokenization: 
+	Divides the text into individual sentences, typically using punctuation marks like periods, exclamation marks, and question marks as delimiters.
+	
+N Gram - Word Tokenization:
+
+	This method generates n-grams, contiguous sequences of n items (words) from the text.
+	
+Word Tokenization : 
+
+	This method breaks down the text into individual words, usually using white spaces and punctuation marks as delimiters.
+
+N Gram - Word Tokenization:
+
+	This method generates n-grams, contiguous sequences of n items (characters) from the text.
+	
+Char Tokenization : 
+
+	This method breaks down the text into individual characters.
+	
+Subword Tokenization: 
+
+	This technique breaks down words into smaller units, such as morphemes or subwords, which can help capture the meaning of out-of-vocabulary words.
+	
+	Examples : 
+	
+	1. Word-Piece 
+	
+		Overall Training Strategy : Start with small vocabulary and build on it on each iteration.
+	
+		Step 1 : Form Corpus
+		Step 2 : Split corpus into individual words and calc frequency of each.
+		Step 3 : Split each word into individual chars.
+		Step 4 : Get unique individual chars from step #3 and form initial vocabulary.
+		Step 5 : slide on each individual character and form a pair. Calculate score of the pair using the below formula :
+							score = frequency of pair / (frequency of first element * frequency of second element)
+							
+		Step 6 : pick the pair with highest score and add it to the vocabulary.
+		Step 7 : merge them in the chars list as well. Slide on each and form a pair again and repeat the steps.
+		Step 8 : You will have the desired vocab either when all the pairs are added or when we reached desired vocab size. 
+						e..g vocab size = 30k 
+						
+		e.g. 
+		
+		Step 1 : corpus = 'huggingface course'
+		Step 2 : 
+			huggingface = 1
+			course = 1
+		Step 3 : 
+			h, ##u, ##g, ##g, ##i, ##n , ##g, ##f, ##a , ##c, ##e
+			c, ##o, ##u, ##r, ##s, ##e
+			
+		Step 4 : 
+			vocab = h, ##u, ##g, ##i, ##n, ##f, ##a , ##c, ##e, c, ##o, ##r, ##s
+			
+		Step 5 : 
+			
+			score for h, ##u = frequency of pair/ (frequency of first element * frequency of second element) =  (1) / (1 * 2) = 0.5
+			
+			Assume this pair has the highest score than other pairs.
+			
+		Step 6 : 
+		
+			Merge h and ##u and form 'hu'.
+			Add it to vocab in Step #4.
+			
+		Step 7 : 
+		
+			now the chars list will be 
+			
+			hu, ##g, ##g, ##i, ##n , ##g, ##f, ##a , ##c, ##e
+			c, ##o, ##u, ##r, ##s, ##e
+			
+			Iterate as ealier and calculate scores and keep adding the highest score pairs to vocab.
+			
+		Step 8 : 
+		
+			final vocab = [h, ##u, ##g, ##i, ##n, ##f, ##a , ##c, ##e, c, ##o, ##r, ##s, hu, hug, hugg, huggi, ##n, ##gfac, co, ##rse]
+			
+		Step 9 : 
+		
+			huggingface and course will be tokenized as follows : 
+			
+			huggi, ##n, ##gfac, ##e
+			co, ##u, ##rse
+			
+			
+		Note : ## denotes trailing tokens.
+		
+		
+		
+	
+	
+	2. Byte-Pair Encoding
+	
+		Overall Training Strategy : Start with small vocabulary and build on it on each iteration.
+	
+		Step 1 : Form Corpus
+		Step 2 : Split corpus into individual words and calc frequency of each.
+		Step 3 : Split each word into individual chars.
+		Step 4 : Get unique individual chars from step #3 and form initial vocabulary.
+		Step 5 : slide on each individual character and form a pair. Calculate score of the pair using the below formula :
+							score = frequency of pair / (frequency of first element * frequency of second element)
+							
+		Step 6 : pick the pair with highest score and add it to the vocabulary.
+		Step 7 : merge them in the chars list as well. Slide on each and form a pair again and repeat the steps.
+		Step 8 : You will have the desired vocab either when all the pairs are added or when we reached desired vocab size. 
+						e..g vocab size = 30k 
+						
+		e.g. 
+		
+		Step 1 : corpus = 'huggingface course hugging hug hugger huggers'
+		Step 2 : 
+			huggingface = 1
+			course = 1
+			hugging = 1
+			hug = 1
+			hugger = 1
+			huggers = 1
+		Step 3 : 
+			h, u, g, g, i, n , g, f, a , c, e
+			c, o, u, r, s, e
+			h, u, g, g, i, n , g,
+			h, u, g,
+			h, u, g, g, e, r
+			h, u, g, g, e, r, s
+			
+		Step 4 : 
+			vocab = h, u, g, i, n, f, a , c, e, c, o, r, s
+			
+		Step 5 : 
+			
+			score for h, u = frequency of pair = (5)
+			
+			Assume this pair has the highest score than other pairs.
+			
+		Step 6 : 
+		
+			Merge h and u and form 'hu'.
+			Add it to vocab in Step 4.
+			
+			Keep track of merge rules seperately
+			
+			h + u = hu
+			hu + g = hug
+		
+			
+		Step 7 : 
+		
+			now the chars list will be 
+			
+			hu, g, g, i, n , g, f, a , c, e
+			c, o, u, r, s, e
+			
+			Iterate as ealier and calculate scores and keep adding the highest score pairs to vocab.
+			
+		Step 8 : 
+		
+			final vocab = [h, u, g, i, n, f, a , c, e, c, o, r, s, hu, hug etc]
+			
+		Step 9 : 
+		
+			hugs will be tokenized as follows : 
+			
+			1. split into individual chars : h,u, g, s
+			2. merge chars based on rules learnt
+				hu, g, s
+				hug, s
+				
+				so result = hug, s
+	
+	3. SentencePiece/Unigram
+	
+		Overall Training Strategy : Start with big vocabulary and reduce p percent of tokens from vocabulary on each iteration, by calculating which impacts the loss the less.
+		
+		Step 1 : Form Corpus
+		Step 2 : Split corpus into individual words and calc frequency of each.
+		Step 3 : Split each word into individual chars.
+		Step 4 : Get all possible splits from step #3 and form initial vocabulary with their probability. 
+				 Keep the base characters untouched as we may need to base chars to tokenize any token in future.
+		Step 5 : Calculate prob of each token split and pick the one with highest.
+		Step 6 : Calculate Overall loss with all tokens.
+					Loss = sum(token frequency * log (joint prob of token split) of all tokens)
+					
+		Step 7 : Remove p percent of tokens and re-calculate loss and pick the p percent which minimise the loss.
+		Step 7 : iterate and reduce the vocab until we reach the desired size.
+		
+		
+		
+		
+		e.g. 
+		
+		Step 1 : corpus = 'hug pug lug bug dug'
+		Step 2 : 
+			hug = 10
+			pug = 12
+			lug = 5
+			bug = 4
+			dug = 5
+			
+		Step 3 : 
+			h, u, g, p, u, g, l, u, g, b,u,g, d, u, g, hu, g, pu, g, lu, g, bu, g, du, g
+			
+		Step 4 : 
+			vocab = h, u, g, p, l, b, d, hu, pu, lu, bu, du
+			
+			h = 10/180
+			u = 36/180
+			g = 36/180
+			hu = 10/180
+			ug = 36/180
+			etc
+			
+		Step 5 : 
+			calc scores i.e. Prob of each token split and pick the one with highest.
+			
+			
+			lets say for word hug, 
+			
+			h , u, g = 10/180 * 36/180 * 36/180
+			hu, g = 10/180 * 36/180
+			h, ug = 10/180 * 36/180
+			hug = 0 [not in vocab, so 0]
+			
+			highest one = hu , g [same as h, ug - you can select either one]
+			
+			In practise, we will use viterbi algo to choose the token split with highest probability.
+			
+		Step 6 : 
+		
+			calc overall loss of corpus
+			
+			hug = hu, g = 0.0111
+			bug = bu, g = 0.00444
+			lug = lu, g = 0.00556
+			pug = pu, g = 0.0133
+			dug = du, g = 0.00556
+			
+			loss = sum (word freq * -log (prob of token split)) = 10 * -log(0.0111) + etc = 170
+		
+			
+		Step 7 : 
+		
+			Remove p percent of tokens and recalc the loss and remove the ones which reduce the loss.
+	
+			
+		Step 8 : 
+		
+			Iterate and buid final vocab until we reach the desired vocab size or not possibel to reduce the tokens without impacting the loss.
+			
+		
