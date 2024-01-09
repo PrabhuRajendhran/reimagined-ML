@@ -1,0 +1,47 @@
+Semantic Textual Similarity
+
+Step 1 : Form corpus
+
+Step 2 : Chunk corpus
+
+Step 3 : Get embeddings for each chunk
+
+Step 4a : 
+
+		1. Calculate Similarity score for each sentence against all sentences.
+
+			pros : easy to implement
+			cons : quadratic complexity
+			
+		2. Pick the Sentences with highest similarity for each sentence's paraphrase/s(based on top_k).
+
+Step 4b : 
+
+		1. instead of searching for all sentences at the same time, search for 'x' sentences at a time (based on query_chunk_size)
+			e.g. Total sentences = 100k
+				 query_chunk_size = 10k
+				 then, 10k sentences will be searched against the corpus of 100k sentences to find its paraphrase/s.
+				 
+		2. instead of searching for all sentences against all sentences at the same time, search for 'x' sentences against 'y' sentences at a time 
+		(based on query_chunk_size and corpus_chunk_size)
+			e.g. Total sentences = 100k
+				 query_chunk_size = 10k
+				 corpus_chunk_size = 50k
+				 then, 10k sentences will be searched against the corpus of 50k sentences and then aginst the remaining 50k to find its paraphrase/s.	
+
+		3. instead of searching for all sentences against all sentences and retrieving scores of all sentences at the same time , 
+		search for 'x' sentences against 'y' sentences and retrieve 'z' scores at a time.
+		(based on query_chunk_size and corpus_chunk_size and top_k)
+			e.g. Total sentences = 100k
+				 query_chunk_size = 10k
+				 corpus_chunk_size = 50k
+				 top_k = 100
+				 then, 10k sentences will be searched against the corpus of 50k sentences and then aginst the remaining 50k to find its paraphrase/s.
+				 And only 100 paraphrases are fetched for each sentence based on the scores(cosine_similarity if embedding not normalized or dot product if embedding normlaized).
+				 
+				 
+		4. related to final output : instead of returning all similar pairs , return only 'q' pairs (based on max_pairs)
+			e.g. Total similar pairs = 500
+				 max_pairs = 100
+				 then, only 100 pairs will be in the output 
+
