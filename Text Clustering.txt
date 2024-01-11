@@ -1,0 +1,39 @@
+Text Clustering :
+
+Step 1 : Form corpus
+
+Step 2 : Chunk corpus
+
+Step 3 : Get embeddings for each chunk 
+
+			1) can be used in realtime
+			2) Store them in vector databases and fetch later when needed
+			
+Step 4a: Fit KMeans clustering model on the embeddings [pass no.of.clusters]
+
+			Pros : easy to implement
+			
+			Cons : slower for more sentences
+				   No.of.clusters to be provided beforehand.
+				   roughly, cluster groups are of same size.
+				   
+Step 4b: Fit Agglomerative clustering model on the embeddings [not required to pass no.of.clusters, but threshold to be provided to merge]
+
+			Pros : easy to implement
+			       No.of.clusters NOT to be provided beforehand.
+				   
+			Cons : faster than KMeans for more sentences, but yet slower.
+				   
+Step 4c: Fit Fast clustering model on the embeddings [not required to pass no.of.clusters, but threshold to be provided : A high threshold will
+only find extremely similar sentences, a lower threshold will find more sentence that are less similar. 
+And, A second parameter is 'min_community_size': Only communities with at least a certain number of sentences will be returned.]
+
+			Pros : easy to implement using sbert.utils.community_detection
+			       No.of.clusters NOT to be provided beforehand.
+				   
+			Cons : faster than KMeans and Agglomerative.
+
+Step 5 : Get the cluster assignments from clustering model for each sentence.
+
+Step 6 : Map the assignements with sentences and display.
+		

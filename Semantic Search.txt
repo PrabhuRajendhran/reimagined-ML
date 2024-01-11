@@ -1,0 +1,81 @@
+Semantic Search
+
+Symmetric Semantic Search :
+
+When the query and to-be-retreved answer is of similar length.
+
+Asymmetric Semantic Search :
+
+When the query is shorter than the to-be-retreved answer.
+
+
+
+Step 1 : Form corpus
+
+Step 2 : Chunk corpus
+
+Step 3 : Get embeddings for each chunk 
+
+			1) can be used in realtime
+			2) Store them in vector databases and fetch later when needed
+			
+
+Step 4a : 
+
+		1. Calculate Similarity score for each sentence against all sentences.
+
+			pros : easy to implement
+			cons : quadratic complexity
+			
+		2. Pick the Sentences with highest similarity for each sentence's paraphrase/s(based on top_k).
+
+Step 4b : 
+
+		1. instead of searching for all sentences at the same time, search for 'x' sentences at a time (based on query_chunk_size)
+			e.g. Total sentences = 100k
+				 query_chunk_size = 10k
+				 then, 10k sentences will be searched against the corpus of 100k sentences to find its paraphrase/s.
+				 
+		2. instead of searching for all sentences against all sentences at the same time, search for 'x' sentences against 'y' sentences at a time 
+		(based on query_chunk_size and corpus_chunk_size)
+			e.g. Total sentences = 100k
+				 query_chunk_size = 10k
+				 corpus_chunk_size = 50k
+				 then, 10k sentences will be searched against the corpus of 50k sentences and then aginst the remaining 50k to find its paraphrase/s.	
+
+		3. instead of searching for all sentences against all sentences and retrieving scores of all sentences at the same time , 
+		search for 'x' sentences against 'y' sentences and retrieve 'z' scores at a time.
+		(based on query_chunk_size and corpus_chunk_size and top_k)
+			e.g. Total sentences = 100k
+				 query_chunk_size = 10k
+				 corpus_chunk_size = 50k
+				 top_k = 100
+				 then, 10k sentences will be searched against the corpus of 50k sentences and then aginst the remaining 50k to find its paraphrase/s.
+				 And only 100 paraphrases are fetched for each sentence based on the scores(cosine_similarity if embedding not normalized or dot product if embedding normlaized).
+				 
+				 
+
+How to improve Semantic Search performance :
+
+1. Move your query embeddings and corpus embeddinsg to GPU and then perform exact nearest neighbour search.
+
+2. Instead of exact nearest neigbour search, employ approximate nearest neighbour search menthods like ANNOY, FAISS, HNSWLIB. 
+   [recall vs speed trade-off]
+   
+3. Additional Ranker pipeline is added to Retriever pipeline.
+
+
+Pipeline 1 - Retriever : Retrieve top k hits for each query [using bi-encoders or embeddings + similatiy measure]
+
+Pipeline 2 - Re-Ranker : Pass the query and every top k sentence as a pair to Cross-Encoder and rerank them and return top_x results [say 5 or 10 as in Gogole search]
+						
+						 Cross-encoders are much efficient than Bi-Encoders in getting the similar ones.
+
+			
+			Why now we use Cross-Encoder than Bi-Encoder in both pipelines? Or why not to use cross-encoder alone?
+			
+			Performance will take a hit, as we had to pass each sentence pair combo to get the score.
+			
+			That's the reason, use retriever to get top k pairs and filter in teh required pairs using re-ranker.
+			
+			But, when the sentence pairs are lesser (say in hundreds), then we can avoid retriever pipeline.
