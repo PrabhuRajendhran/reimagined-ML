@@ -1,0 +1,5 @@
+Self Supervised : https://www.v7labs.com/blog/self-supervised-learning-guide
+
+Semi Supervised : https://www.v7labs.com/blog/semi-supervised-learning-guide
+
+Contrastive LEarning : https://www.v7labs.com/blog/contrastive-learning-guide

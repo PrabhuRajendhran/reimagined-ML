@@ -1,0 +1,28 @@
+Zero Shot Classification : 
+
+https://huggingface.co/learn/nlp-course/en/chapter1/4?fw=pt#transfer-learning
+
+https://aws.amazon.com/blogs/machine-learning/zero-shot-text-classification-with-amazon-sagemaker-jumpstart/
+
+https://joeddav.github.io/blog/2020/05/29/ZSL.html
+
+https://huggingface.co/tasks/zero-shot-classification
+
+
+
+Few Shot Classification :
+
+https://huggingface.co/docs/setfit/conceptual_guides/setfit
+
+https://www.width.ai/post/what-is-setfit
+
+https://huggingface.co/blog/setfit
+
+https://www.v7labs.com/blog/contrastive-learning-guide
+
+
+SetFit (Sentence Trasnformers Fine Tuning) Training
+
+Part 1 : Embedding Fine Tuning Phase
+
+Part 2 : Classifier Training Phase
