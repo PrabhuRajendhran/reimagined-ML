@@ -1,5 +1,94 @@
-Self Supervised : https://www.v7labs.com/blog/self-supervised-learning-guide
+Supervised :
+
+Step 1 : Gather Data
+
+Step 2 : Label Data
+
+Step 3 : Instantiate a model
+
+Step 4 : Fit model to the labelled data
+
+Step 5 : Train and Tune the model
+
+Step 6 : Evaluate model on unseen data
+
+Step 7 : Finalize and save model
+
+
+
+UnSupervised : 
+
+Step 1 : Gather Data
+
+Step 2 : No need to Label Data
+
+Step 3 : Instantiate a model
+
+Step 4 : Fit model to the Unlabelled data
+
+Step 5 : Train and Tune the model
+
+Step 6 : Evaluate model on unseen data [we could use labelled data as well here]
+
+Step 7 : Finalize and save model
+
 
 Semi Supervised : https://www.v7labs.com/blog/semi-supervised-learning-guide
+				  https://spotintelligence.com/2023/12/28/semi-supervised-machine-learning-made-simple-5-algorithms-how-to-python-tutorial/
+				  
+Step 1 : Gather Data
 
-Contrastive LEarning : https://www.v7labs.com/blog/contrastive-learning-guide
+Step 2 : Label limited Data and dont label the rest
+
+Step 3 : Instantiate a model
+
+Step 4 : Fit model to the labelled (limited) data
+
+Step 5 : Forms a loop
+
+Step 5.1 : Train and Tune the model
+
+Step 5.2 : Predict on the unlabelled data using the trained model
+
+Step 5.3 : Get High Confidence labels and add those to the labelled dataset.
+
+Step 5.4 : Re-Train with additional data in step #5.3 and Tune the model
+
+Step 6 : Evaluate model on unseen data
+
+Step 7 : Finalize and save model
+
+
+Contrastive Learning : https://www.v7labs.com/blog/contrastive-learning-guide
+
+
+
+
+Meta Learning : https://spotintelligence.com/2023/08/10/understanding-meta-learning/
+
+
+
+Active Learning : https://spotintelligence.com/2023/08/08/active-learning-in-machine-learning/
+
+
+
+Few Shot Learning : https://spotintelligence.com/2023/06/29/few-shot-learning/
+
+
+
+Zero Shot Learning : https://spotintelligence.com/2023/08/01/zero-shot-classification/
+
+Step 1 : Gather Data
+
+Step 2 : No need to Label Data
+
+Step 3 : Load a Pre-Trained model
+
+Step 4 : Predict on the unlabelled data using the loaded pre-trained model
+
+Step 5 : 
+
+
+
+
+Self Supervised : https://www.v7labs.com/blog/self-supervised-learning-guide
