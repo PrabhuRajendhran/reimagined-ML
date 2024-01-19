@@ -59,6 +59,103 @@ Step 6 : Evaluate model on unseen data
 Step 7 : Finalize and save model
 
 
+Zero Shot Learning :
+			https://huggingface.co/learn/nlp-course/en/chapter1/4?fw=pt#transfer-learning
+
+			https://aws.amazon.com/blogs/machine-learning/zero-shot-text-classification-with-amazon-sagemaker-jumpstart/
+
+			https://joeddav.github.io/blog/2020/05/29/ZSL.html
+
+			https://huggingface.co/tasks/zero-shot-classification
+
+			https://spotintelligence.com/2023/08/01/zero-shot-classification/
+
+
+Step 1 : Gather Data
+
+Step 2 : No need to Label Data
+
+Step 3 : Load a Pre-Trained model
+
+Step 4 : Predict on the unlabelled data using the loaded pre-trained model
+
+Step 5 : How prediction works? 
+		
+		
+		Option 1a : Latent Embedding Approach  (without projection)
+			1. Model Projects inout sentences and candidate labels into latent embedding space.
+			2. Calculate how similar each candidate label against all sentences.
+			3. Return the more similar label for each sentence.
+		
+		Option 1b : Latent Embedding Approach  (with projection)
+			1.1. Model Projects inout sentences and candidate labels into latent embedding space.
+			1.2. Additional Transformation matrix is used to better learn the representation from individual candaite labels to pooled vectors.
+					1.2.1. Take the top K most frequent words V in the vocabulary of a word2vec model
+					1.2.2. Obtain embeddings for each word using word2vec,Φword(V)
+					1.2.3. Obtain embeddings for each word using S-BERT, Φsent(V)
+					1.2.4. Learn a least-squares linear projection matrix Z with L2 regularization from Φ sent (V) to Φword(V)
+					
+					Since we have only learned this projection for embeddings of single words,
+					we cannot expect it to learn an effective mapping between S-BERT sequence representations and labels embedded with word2vec.
+					Instead, we use Z in our classification only as an additional transformation to S-BERT embeddings for both sequences and labels
+
+					Model (from) : c^ = argmax​ cos(Φ sent (x),Φ sent (c)) [for all class c∈C
+					Model (to) : c^ = argmax​ cos(Φ sent (x) * Z,Φ sent (c) * Z) [for all class c∈C
+
+			2. Calculate how similar each candidate label against all sentences.
+			3. Return the more similar label for each sentence.
+		
+		
+		Option 2 : Natural Language Inference Approach 
+			1. Construct the "hypothesis" using the labels provided by users.
+			2. Consider the input sentence as "premise".
+			
+			How hypothesis is constructed?
+			
+			Input to the model is constructed as Premise/Hypothesis pair 
+			such that Premise is the Text itself & Hypothesis has a template of “this example is {}” for each Candidate Label
+			
+			3. Model tells whether the premise entails/contradicts the hypothesis.
+				How the model tells? 
+					Model projects both Premise and Hypothesis into the same latent space based on its knowledge gained during pre-training.
+					Calculate where both premise and hypothesis lies in that space i.e. how similar. 
+					Based on that, it returns the response.
+					
+					
+		Option 3 : Approaching the classification as a Cloze Task
+		
+			1. Need User to construct Cloze template. [Masked sentence that could fit the label]
+			2. Ask LM to fill the blank given the sentence.
+		
+		
+		Option 4 : LM To question answer
+		
+			1. LM to answer which class, the sentence belongs to?
+		
+					
+Few Shot Learning : 
+			https://huggingface.co/docs/setfit/conceptual_guides/setfit
+
+			https://www.width.ai/post/what-is-setfit
+
+			https://huggingface.co/blog/setfit
+
+			https://www.v7labs.com/blog/contrastive-learning-guide
+
+			https://spotintelligence.com/2023/06/29/few-shot-learning/
+
+			https://joeddav.github.io/blog/2020/05/29/ZSL.html
+
+
+
+
+SetFit (Sentence Transformers Fine Tuning) Training
+
+Part 1 : Embedding Fine Tuning Phase
+
+Part 2 : Classifier Training Phase
+
+
 Contrastive Learning : https://www.v7labs.com/blog/contrastive-learning-guide
 
 
@@ -69,25 +166,6 @@ Meta Learning : https://spotintelligence.com/2023/08/10/understanding-meta-learn
 
 
 Active Learning : https://spotintelligence.com/2023/08/08/active-learning-in-machine-learning/
-
-
-
-Few Shot Learning : https://spotintelligence.com/2023/06/29/few-shot-learning/
-
-
-
-Zero Shot Learning : https://spotintelligence.com/2023/08/01/zero-shot-classification/
-
-Step 1 : Gather Data
-
-Step 2 : No need to Label Data
-
-Step 3 : Load a Pre-Trained model
-
-Step 4 : Predict on the unlabelled data using the loaded pre-trained model
-
-Step 5 : 
-
 
 
 

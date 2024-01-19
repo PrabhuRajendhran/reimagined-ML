@@ -1,0 +1,122 @@
+NLP References :
+
+Gemini API Key : AIzaSyD2r51vuxj4Xh0YrkYMV_jqAyANXznwb_M
+
+
+roadmap : https://blog.futuresmart.ai/nlp-roadmap-2023-step-by-step-guide
+
+Full Stack DL : https://fullstackdeeplearning.com/course/
+
+CHECK FLAIR COURSE
+FASTAI COURSE
+COURSERA NLP COURSE
+
+HF Transformers - https://huggingface.co/learn/nlp-course/chapter0/1?fw=pt - done
+SBERT - https://sbert.net/ - done
+https://mccormickml.com/2019/05/14/BERT-word-embeddings-tutorial
+
+BERTopic : https://github.com/MaartenGr/BERTopic
+Top2Vec : https://github.com/ddangelov/Top2Vec
+
+Cohere LLM University COURSE : https://docs.cohere.com/docs/llmu
+Cohere Gen AI Series : https://txt.cohere.com/generative-ai-part-1/
+Full Stack LLM : https://fullstackdeeplearning.com/llm-bootcamp/
+
+Github LLM bootcamp : https://github.com/mlabonne/llm-course
+AIPlanet LLM Bootcamp : https://aiplanet.com/learn/llm-bootcamp/bootcamp-getting-started-essentials
+Analytics Vidhya LLM
+activeloop llm
+
+Langchain
+LlamaIndex
+
+Vector Databases
+
+Search - Annoy, HNSW
+
+Datatalks - ML, MLOps, DE
+
+Use Colab like a Pro : https://pub.towardsai.net/use-google-colab-like-a-pro-39a97184358d
+
+Log of Learnings : https://github.com/amitness/learning
+
+Ambiguities : https://www.tutorialspoint.com/all-types-of-ambiguities-in-nlp
+
+Cross Entropy Loss : https://neptune.ai/blog/cross-entropy-loss-and-its-applications-in-deep-learning
+
+Keras Loss Functions : https://neptune.ai/blog/keras-loss-functions
+PyTorch Loss Functions : https://neptune.ai/blog/pytorch-loss-functions
+
+word2vec : https://jalammar.github.io/illustrated-word2vec/
+
+fasttext : https://amitness.com/2020/06/fasttext-embeddings/
+
+GLoVE :https://analyticsindiamag.com/hands-on-guide-to-word-embeddings-using-glove/
+
+word embeddings : https://wandb.ai/authors/embeddings/reports/Word2Vec---VmlldzozMzIxNjQ
+
+Seq2Seq models + attention : https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/
+https://medium.com/analytics-vidhya/encoder-decoder-seq2seq-models-clearly-explained-c34186fbf49b
+
+RNN : https://www.youtube.com/watch?v=UNmqTiOnRfg & https://towardsdatascience.com/illustrated-guide-to-recurrent-neural-networks-79e5eb8049c9
+
+LSTM & GRU : https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21
+
+Transformer : 
+https://jalammar.github.io/illustrated-transformer/
+https://towardsdatascience.com/illustrated-guide-to-transformers-step-by-step-explanation-f74876522bc0
+https://tamoghnasaha-22.medium.com/transformers-illustrated-5c9205a6c70f
+https://medium.com/@geetkal67/attention-networks-a-simple-way-to-understand-self-attention-f5fb363c736d
+https://www.linkedin.com/pulse/clear-explanation-transformer-neural-networks-ebin-babu-thomas/
+
+BERT : https://jalammar.github.io/illustrated-bert/ & https://jalammar.github.io/a-visual-guide-to-using-bert-for-the-first-time/
+
+GPT : https://jalammar.github.io/illustrated-gpt2/ & https://jalammar.github.io/how-gpt3-works-visualizations-animations/
+
+RAG Chatbot : https://txt.cohere.com/rag-chatbot/
+
+Cohere Fine Tuning : https://txt.cohere.com/fine-tuning-suite/
+
+
+
+
+
+Github : 
+
+1. https://github.com/dipanjanS/practical_nlp_workshop_gids20/tree/main
+2. https://youtu.be/iK7eMd2_ohc?feature=shared
+3. https://medium.com/google-colab/noteworthy-notebooks-3-analyzing-a-bank-failure-with-colab-d23b372de313
+4. https://github.com/googlecolab/colabtools/tree/main/notebooks
+
+NLP is a branch of machine learning that focuses on making computers understand human language. 
+It is used to create language models, language translation apps like Google Translate, and virtual assistants, among other things1.
+
+Text pre-processing is the process of transforming unstructured text to structured text to prepare it for analysis. 
+When you pre-process text before feeding it to algorithms, you increase the accuracy and efficiency of said algorithms by removing noise 
+and other inconsistencies in the text that can make it hard for the computer to understand. 
+Making the text easier to understand also helps to reduce the time and resources required for the computer to pre-process data1.
+
+Here are some of the most common text pre-processing techniques used in NLP:
+
+Tokenization: 
+
+Tokenization is the process of breaking down text into smaller units called tokens. 
+These tokens can be words, phrases, or sentences. 
+Tokenization is an essential step in NLP because it allows the computer to work on your text token by token rather than working on the entire text at once. 
+There are two main types of tokenization: word tokenization and sentence tokenization.
+
+Normalization: Normalization is the process of converting text to a standard form. 
+This can include converting all text to lowercase, removing numbers, or removing punctuation. 
+Normalization helps to make the text more consistent and easier to understand.
+
+Stop Word Removal: Stop words are words that are commonly used in a language but do not add any meaning to the text. 
+Examples of stop words include “the,” “and,” and “a.” 
+Removing stop words from your text can help to reduce the size of your dataset and improve the accuracy of your algorithms1.
+
+Stemming: Stemming is the process of reducing words to their root form. 
+For example, the words “running,” “ran,” and “runner” would all be reduced to the root word “run.” 
+Stemming can help to reduce the size of your dataset and improve the accuracy of your algorithms.
+
+Lemmatization: Lemmatization is similar to stemming, but it reduces words to their base or dictionary form. 
+For example, the word “better” would be reduced to “good.” 
+Lemmatization can help to improve the accuracy of your algorithms by reducing the number of unique words in your dataset.
