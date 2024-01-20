@@ -1,0 +1,99 @@
+Roadmap 
+
+Text Representation
+	- BoW
+	- TFIDF
+	- word2vec
+	- FastText
+	- GLoVE
+	- ELMo
+	- BERT
+	- sBERT
+	
+
+Similarity 
+
+	- Dot product
+	- cosine similarity
+	- Embed endpoints from : 
+		HF
+		SBERT
+		Cohere
+		OpenAI
+		
+Semantic Search
+	- symmetric search
+	- asymmetric search
+			- exact search 
+				- on the fly
+				- storing corpus embeddings in a vector/normal database and fetching on the fly
+			- approximate search
+	- Retrieve[using lexical or semantic - exact search or ann search] and Re-Rank
+	
+Zero Shot Classification
+
+	- latent embedding approach
+	- cloze task
+	- LM To Q&A
+	- Natural Language Inference (NLI) approach
+
+Few Shot Classification
+
+	- SetFit
+
+
+Sentence Classification [examples : Sentiment Analysis, Aspect Based Sentiment Analysis]
+
+	
+
+Token Classification
+
+
+Question answering
+
+
+Table Question answering
+
+
+Summarization
+
+
+Fill mask
+
+
+Text Generation
+
+
+Translation
+
+
+Conversational
+
+
+
+Text to Image
+
+
+Text to Video
+
+
+Image to Text
+
+
+
+Document Question answering
+
+
+
+
+Using Pre-Trained Models
+
+Fine Tuning models
+
+Prompt Engineering
+
+RAG
+
+frameworks : llamaindex, langchain
+
+anvil, weaviate, llamaguard, 

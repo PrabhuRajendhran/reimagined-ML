@@ -36,6 +36,8 @@ Search - Annoy, HNSW
 
 Datatalks - ML, MLOps, DE
 
+Learn TensorFlow, PyTorch, PyTorch Lightning, Accelerate
+
 Use Colab like a Pro : https://pub.towardsai.net/use-google-colab-like-a-pro-39a97184358d
 
 Log of Learnings : https://github.com/amitness/learning
