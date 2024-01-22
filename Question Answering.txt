@@ -1,0 +1,43 @@
+Question Answering (Extractive - Extract answer from then context provided]
+	https://huggingface.co/tasks/question-answering
+	https://huggingface.co/docs/transformers/tasks/question_answering
+	https://huggingface.co/learn/nlp-course/chapter7/7?fw=pt#the-squad-dataset [refer this, for preparing data and training]
+	https://huggingface.co/learn/nlp-course/chapter6/3b [refer this, for decoding inference output]
+	https://lilianweng.github.io/posts/2020-10-29-odqa/
+	https://yjernite.github.io/lfqa.html
+	
+	https://www.youtube.com/watch?v=Ihgk8kGLpIE [HF workshop]
+	
+	https://spotintelligence.com/2023/01/20/question-answering-qa-system-nlp/
+	
+	https://medium.com/nlplanet/two-minutes-nlp-quick-intro-to-knowledge-base-question-answering-d3c9ef91c9b7
+
+
+Step 1 : Gather Data
+
+Step 2 : Prepare Data with columns : Question, context, answers , labels [start index and end index of the token]
+
+Step 3 : Split into Train and Test Data [and validation data if needed] - now or after pre-processing
+
+Step 4 : Tokenize and PreProcess Data
+			- In some examples, where the context could be long, if we simply truncate, we could lose the potential information.
+			- hence, you set return_overflowing_tokens = true , to get the context split into 2.
+			- and you need to truncate only the context, hence, truncation = 'only second'
+			- if you want overlap in the context, set stride = int , to have 'int' overlap.
+			- you can set max_length as well.
+			- print(inputs['overflow_to_sample_mapping']) to know how many times the context had been split and appear as new / get the mapping between input sentence and the truncated sentence
+			- set return_offset_mappings = true, to get the token start and end indices.
+			
+			- print(inputs.sequence_ids()) to know which sentence is part of question and context.
+			
+			- Assign Labels to each question and context , based on the answer.
+					- if answer not in context, assign (0,0)
+					- else, start and end char of answer in the context.
+
+Step 6 : Define Training Args [learning params, eval strategy, compute metrics function]
+
+Step 7 : Insantiate Trainer
+
+Step 8 : Start Training
+
+Step 9 : Evaluate and Further, Tune or Finalize model
