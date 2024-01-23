@@ -1,0 +1,35 @@
+Summarization : 
+
+	- Extractive: extract the most relevant information from a document.
+	- Abstractive: generate new text that captures the most relevant information. 
+	
+	
+Step 1 : Gather Data
+
+Step 2 : Prepare Data with columns : Input Text, summarized Text
+
+Step 3 : Split into Train and Test Data [and validation data if needed] - now or after pre-processing
+
+Step 4 : Tokenize and PreProcess Data
+			- Truncate the input text [text to be summarized] to the model's max_length or lesser.
+			- overflowing tokens will not add much value [yet to tbe tried though]
+			- may need to "prefix" your input based on the chosen model [e.g. you had to prefix "Summarize"  for all inout texts , if T5 model is chosen]
+					e.g. inputs = [prefix + doc for doc in examples["text"]]
+						 model_inputs = tokenizer(inputs, max_length=1024, truncation=True)
+			
+			- pass the summarized text to the "text_target" param of the tokenizer [so that model will know]
+					e.g. labels = tokenizer(text_target=examples["summary"])
+			
+			- assign the "input_ids" of target labels , back to the tokenized input text.
+					e.g. model_inputs["labels"] = labels["input_ids"]
+					
+Step 5 : Pad and Collate the batched data 
+
+Step 6 : Define Training Args [learning params, eval strategy, compute metrics function]
+
+Step 7 : Insantiate Trainer
+
+Step 8 : Start Training
+
+Step 9 : Evaluate and Further, Tune or Finalize model 
+			[NOTE : not advisable to fine-tune the model for not more than 2-3 epochs, as it may lead to "Catatrophic Forgetting"]

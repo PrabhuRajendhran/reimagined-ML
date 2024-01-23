@@ -1,0 +1,30 @@
+Token Classification
+	https://huggingface.co/tasks/text-classification
+	https://huggingface.co/docs/transformers/tasks/token_classification
+	https://huggingface.co/learn/nlp-course/chapter7/2?fw=pt
+	https://huggingface.co/blog/spacy
+	
+	
+	Custom NER : https://vkhangpham.medium.com/build-a-custom-ner-pipeline-with-hugging-face-a84d09e03d88
+
+Step 1 : Gather Data
+
+Step 2 : Label Data
+
+Step 3 : Split into Train and Test Data [and validation data if needed] - now or after pre-processing
+
+Step 4 : Pre-Process Data : Lower case, words removal, truncation strategy , padding (now or later while collating for each batch) 
+
+Step 5.1 : Tokenize Data with word tokenizer 
+						(OR)
+Step 5.2 : Tokenize Data with sub-word tokenizer and Align Tokenized Data with the labels - as words could be divided into sub-words [IMP!!!]
+
+Step 6 : Pad and Collate the batched data.
+
+Step 7 : Define Training Args [learning params, eval strategy, compute metrics function]
+
+Step 8 : Insantiate Trainer
+
+Step 9 : Start Training
+
+Step 10 : Evaluate and Further, Tune or Finalize model

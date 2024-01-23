@@ -48,6 +48,10 @@ Sentence Classification [examples : Sentiment Analysis, Aspect Based Sentiment A
 
 Token Classification
 
+	- NER
+	- POS Tagging
+	- Chunking 
+
 
 Question answering
 
@@ -88,12 +92,10 @@ Document Question answering
 
 Using Pre-Trained Models
 
-Fine Tuning models
-
 Prompt Engineering
 
 RAG
 
-frameworks : llamaindex, langchain
+Fine Tuning models
 
-anvil, weaviate, llamaguard, 
+frameworks : llamaindex, langchain, anvil, weaviate, llamaguard, 
