@@ -33,3 +33,5 @@ Step 8 : Start Training
 
 Step 9 : Evaluate and Further, Tune or Finalize model 
 			[NOTE : not advisable to fine-tune the model for not more than 2-3 epochs, as it may lead to "Catatrophic Forgetting"]
+
+		Metric : ROUGE

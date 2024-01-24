@@ -28,3 +28,5 @@ Step 8 : Insantiate Trainer
 Step 9 : Start Training
 
 Step 10 : Evaluate and Further, Tune or Finalize model
+
+		  Metric : Accuracy, F1

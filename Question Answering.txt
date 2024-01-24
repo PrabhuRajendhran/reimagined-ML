@@ -54,9 +54,21 @@ Step 8 : Start Training
 
 Step 9 : Evaluate and Further, Tune or Finalize model
 
+		 Metric : Exact Match, F1
+
 
 - Refer on Multiple Choice QA
 
 	https://huggingface.co/blog/Andyrasika/mcq-pytorch-transformers
 	
 	https://medium.com/@shubhama94262/building-a-multiple-choice-question-app-using-langchain-and-llm-model-d59839fd1150
+	
+	
+- Refer Table Question Answering
+
+	https://huggingface.co/tasks/table-question-answering
+	
+		- Prepare the data (table or excel)
+		- Instantiate the model
+		- Pass your question along with the model
+		- Validate answers
