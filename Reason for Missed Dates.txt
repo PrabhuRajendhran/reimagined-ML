@@ -1,0 +1,18 @@
+Jan
+
+1 - New Year (fine)
+5 - Javascript (fine)
+8 - sunday dinner (not fine)
+10 - fever (fine)
+12 - fever (fine)
+14 - sunday (fine)
+15 - Pongal (fine)
+16 - (not fine)
+21 - sunday (fine)
+25 to 27 - studied, but didnt upload (fine)
+28 - sunday (fine)
+
+holidays = 5
+sick = 2
+studied but no upload = 4
+missed = 2 [8th, 16th]

@@ -91,7 +91,7 @@ RAG Chatbot : https://txt.cohere.com/rag-chatbot/
 
 Cohere Fine Tuning : https://txt.cohere.com/fine-tuning-suite/
 
-
+metrics : https://thegradient.pub/understanding-evaluation-metrics-for-language-models/
 
 
 

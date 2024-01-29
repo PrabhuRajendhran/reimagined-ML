@@ -1,6 +1,11 @@
-Masked Language Modelling :  
+Causal Language Modelling :  
 
-		https://huggingface.co/learn/nlp-course/chapter7/3?fw=pt
+		https://huggingface.co/docs/transformers/tasks/language_modeling
+		https://huggingface.co/docs/transformers/generation_strategies
+		https://huggingface.co/learn/nlp-course/chapter7/6?fw=pt
+		https://huggingface.co/blog/how-to-generate
+		https://huggingface.co/blog/constrained-beam-search
+	
 	
 Step 1 : Gather Data
 
@@ -13,11 +18,9 @@ Step 3 : Tokenize and PreProcess Data
 			
 Step 4.1 : Pad and Collate the batched data, if last chunck (with lesser context length) is not thrown out.
 Step 4.2 : datacollatorforlanguagemodelling, automatically create labels (use param mlm = true for masked lm, mlm = false for causual lm)
-Step 4.3 : Apply whole word masking while training [datacollator will help us here]
-				- if we use same datacollator, evaluation scores will be changing everytime, as collator will apply wholewordmasking randomly for different word every time.
-				- to avoid this, we can use collator for training and custom random mask insertion function for evaluation
+		   
 
-Step 5 : Instantiate a new model using the respective model config (or) Load the Pre-Trained model
+Step 5 : Instantiate a new model using the respective model config.
 
 Step 6 : Define Training Args [learning params, eval strategy, compute metrics function]
 

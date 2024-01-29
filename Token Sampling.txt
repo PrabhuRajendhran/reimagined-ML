@@ -1,0 +1,205 @@
+Token Sampling (Or) Decoding Strategies
+
+	https://vinija.ai/concepts/token-sampling/
+	https://huggingface.co/blog/how-to-generate
+	https://huggingface.co/blog/constrained-beam-search
+	https://huggingface.co/docs/transformers/generation_strategies#decoding-strategies
+	https://huggingface.co/blog/introducing-csearch
+	https://huggingface.co/blog/assisted-generation
+	https://openreview.net/forum?id=mqVgBbNCm9
+	https://mlabonne.github.io/blog/posts/2023-06-07-Decoding_strategies.html
+	
+	Text Input 
+		
+		(feed to)
+		-> Encoder 
+		
+		(represent each token as)
+		-> Vector of logits
+		
+		(scale using temperature param - by default : temp = 1)
+		-> scaled vector of logits
+		
+		(softmax)
+		-> probability distribution 
+		
+		(Token Sampling or Decoding Strategy)
+		-> Output Text
+		
+	Token Sampling Strategies :
+	
+		Types ::
+		
+			Deterministic - Greedy Search, Beam Search 
+			
+				Cons : Can lead to model degeneration i.e unnatural words or repetitions
+			
+			Stochastic(Random) - Multi Nominal, Top K, Top P
+			
+				Cons : sometimes, can generate incoherent words.
+		
+		
+		Strategies ::
+	
+			Multi Nominal Sampling :
+			
+				Randomly tokens with non-zero probability are picked up at each step.
+			
+			Greedy Search Decoding :
+			
+				Top 1 token [token with higher probability at each step]
+				
+				Inaccurate predictions
+				
+				word decoding loop
+			
+			Exhaustive Search Decoding :
+				
+				considers every possible combination of output sequences and selecting the one with highest score based on the objective function.
+				
+				Highly accurate but computationaly intensive [O(v ^ t) v vocab size and t length of input text]
+				
+				Not Feasible at all
+			
+			Beam Search Decoding :
+			
+				Instead of considering every possible combination of output sequences and selecting the one with highest score based on the objective function, 
+				At each step, it calculates two most probable options along with their score, 
+				and creates the top scoring hypothesis (best guess of the likely sequence). 
+				It will then backtrack to obtain the full hypothesis.
+				
+				
+				In beam search decoding, different hypotheses may produce <END> tokens on different timesteps.
+				When a hypothesis produces <END>, that particular hypothesis is complete so we place it aside and 
+				continue exploring other hypotheses via beam search.
+				
+				NOTE : Rank the branches based on probability and reduce them to beam size at each step.
+				
+				Usually we continue beam search until:
+					We reach timestep T (where T is some pre-defined cutoff)
+					or
+					We have at least n completed hypotheses (where n is pre-defined cutoff).
+					or
+					both beams generated <END> tokens.
+				
+				So now that we have a list of completed hypotheses, how do we select the one with the highest score that fits our task the best?
+				It’s to be noted that the longer hypotheses have lower scores, so simply selecting the largest score may not work. 
+				Thus, we need to normalize the hypotheses by length and then use this to select the top one.
+				
+				Not guaranteed to find accurate hypothesis, but Efficient than exhaustive search and greedy search.
+				
+			
+				
+			Constrained Beam Search :
+			
+				Same as Traditional beam search, but we are ensuring the output satisfies the "Constraints" provided.
+				
+				It gives us a flexible means to inject external knowledge and requirements into text generation. 
+				Previously, there was no easy way to tell the model to 
+					1. include a list of sequences 
+					2. some of which are optional and some are not, such that 
+					3. they're generated somewhere in the sequence at respective reasonable position
+					
+				e.g. :
+				
+				At each step, we book keep 'b' beam size tokens and add the additional token (to statisfy the constraints)
+				
+				<START>
+				
+					is
+						is fast 
+						is .
+						is hi
+					
+					The
+						the is
+						the dog
+						the cat
+					
+					Hello
+						hello is
+						hello how
+						hello hi
+			
+			
+				you coudl see, the model could predict non-sensical outputs.
+			
+			Constrained Beam Search with Banking :
+			
+				same as contrained beam search, in addition, the beams are grouped into banks 
+									[Bank n refers to the list of beams that have made n steps progress in fulfilling the constraints]
+									
+				<START>
+				
+					is
+						is fast 
+						is .
+						is hi
+					
+					The
+						the is
+						the dog
+						the cat
+					
+					Hello
+						hello is
+						hello how
+						hello hi
+						
+				above is reduced to 
+				
+					the is
+					the dog
+					hello how
+					
+					then the beam search continues.
+				
+				
+			Beam Search with Multi-nominal Sampling : 
+			
+				Combines both Beam Search and Multi-nominal sampling
+				
+			Contrastive Search :
+				
+				output = argmax(((1-alpha) * model confidence) - (alpha * degeneration penalty))
+			
+				alpha - regulation parameter
+				
+				model confidence - probability output by the modle for that token
+				
+				degeneration penalty - max (cosine similarity of that token with all its context )
+				
+				when alpha = 0, contrastive search = greedy search
+			
+			Speculative Decoding (also called Assisted Decoding) :
+			
+				Use a small model to generate text based on any decoding strategy
+				pass the input + generated text (small model) to LLM and validate with respect to left-to-right causality i.e. if any token mismtahces, drop the tokens to the right of that.
+				pass the corrected text to small model again and repeat.
+				
+				
+			
+
+			Top K Sampling :
+			
+				Top K tokens [K tokens with higher probability]
+				
+				after that, 
+				
+					uniform sampling - all top tokens has equal probability to get picked
+					
+					proportionate sampling - tokens based on their probabilities are weighted and get picked
+			
+			
+			Top P Sampling Or Nucleus Sampling
+			
+				Top Tokens with P probability [Tokens with their cumulative probability not exceeding P i.e. <= P]
+				
+				then, re-normalisation of probabilities will happen on the selected subset to ensure fair sampling among the selected.
+				
+				uniform or proportionate sampling can happen again.
+				
+				
+			Parallel Decoding :
+			
+				

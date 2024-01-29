@@ -1,0 +1,4 @@
+Prompt Engineering:
+
+	https://vinija.ai/nlp/prompt-engineering/
+	https://www.tensorops.ai/post/prompt-engineering-techniques-practical-guide
