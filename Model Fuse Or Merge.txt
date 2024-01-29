@@ -1,3 +1,46 @@
-Model Fuse/Merge
+Model Fuse/Merge :::
 
 	https://mlabonne.github.io/blog/posts/2024-01-08_Merge_LLMs_with_mergekit.html
+	https://colab.research.google.com/drive/1obulZ1ROXHjYLn6PPZJwRR6GzgQogxxb?usp=sharing#scrollTo=ik0V0dF55gfU
+	
+	Merging Strategies ::
+	
+	SLERP :
+	
+		- Normalize the input vectors
+		- Compute the similarity between then using dot-product
+		- if the input vectors are colinear, then "Linear Interpolation".
+		- else, SLERP computes scaling factors based on the Interpolation Factor [t=0, 100% of model 1; t=1, 100% of model2] and the similarity angle between them.
+		- scale the vectors based on the scaling factors.
+		- sum them up to create the interpolated vector.
+		
+		Cons : only 2 models can be merged at a time.
+		But, hierarchical merging is allowed [e.g. model1+model2 = MergedModel1; MergedModel1+model3 = MergedModel2; ... so on]
+	
+	PASSTHOUGH :
+	
+		 - take 'x' layers from model1
+		 - take 'y' layers from model2
+		 
+		 - create the base with 'x' layers from model1; and add 'y' layers from model2
+		 - resultant will be mergedmodel with 'x+y' layers.
+	
+	
+	TIES :
+	
+		- Trim : Identify the params that had undergone change during fine tuning, keep the top k% of those, and reset the rest to Zero. [density parameter]
+		
+		- Elect Sign : resolves sign conflicets across model, by creating a unified sign vector based on the dominant direction (positive/negative) in terms of cumulative magnitude.
+		
+		- Disjoint Merge : Averages those param values that align with the unified sign vector (excluding zero values)
+
+
+	DARE :
+	
+		workflow : https://github.com/yule-BUAA/MergeLM
+	
+		DARE follow similar approach to TIES with two main differences :
+		
+		- Drop/Pruning : Randomly reset the fine-tuned weights to their original weights or drop to zero[of base model]
+		
+		- ReScaling : ReScale the weights of the newer models. Add those weights of the newer models to base model with a scaling factor.
