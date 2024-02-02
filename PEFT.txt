@@ -52,34 +52,120 @@ https://huggingface.co/docs/peft/main/en/conceptual_guides/ia3
 
 https://www.mercity.ai/blog-post/fine-tuning-llms-using-peft-and-lora
 
-
-
-
 	Prompt Methods 
 	
 		Prompt Tuning
 		
-		P Tuning
+			Prompt tuning is an additive method for only training and updating the newly added prompt tokens to a pretrained model. 
+			This way, you can use one pretrained model whose weights are frozen, 
+			and train and update a smaller set of prompt parameters for each downstream task instead of fully finetuning a separate model. 
+			As models grow larger and larger, prompt tuning can be more efficient, and results are even better as model parameters scale.
 		
 		Prefix Tuning
 		
+			Prefix tuning is an additive method where only a sequence of continuous task-specific vectors is attached to the beginning of the input, or prefix. 
+			Only the prefix parameters are optimized and added to the hidden states in every layer of the model. 
+			The tokens of the input sequence can still attend to the prefix as virtual tokens. 
+			As a result, prefix tuning stores 1000x fewer parameters than a fully finetuned model, 
+			which means you can use one large language model for many tasks
+		
+		P Tuning
+		
+			P-tuning is designed for natural language understanding (NLU) tasks and all language models. 
+			It is another variation of a soft prompt method; 
+			P-tuning also adds a trainable embedding tensor that can be optimized to find better prompts, 
+			and it uses a prompt encoder (a bidirectional long-short term memory network or LSTM) to optimize the prompt parameters. 
+			
+			Unlike prefix tuning though:
+
+				the prompt tokens can be inserted anywhere in the input sequence, and it isn’t restricted to only the beginning
+				the prompt tokens are only added to the input instead of adding them to every layer of the model
+				introducing anchor tokens can improve performance because they indicate characteristics of a component in the input sequence
+			
+			The results suggest that P-tuning is more efficient than manually crafting prompts, 
+			and it enables GPT-like models to compete with BERT-like models on NLU tasks
+		
 		Multitask Prompt Tuning
+		
+			Multitask prompt tuning (MPT) learns a single prompt from data for multiple task types that can be shared for different target tasks. 
+			Other existing approaches learn a separate soft prompt for each task that need to be retrieved or aggregated for adaptation to target tasks. 
+			
+			MPT consists of two stages:
+
+				source training - for each task, its soft prompt is decomposed into task-specific vectors. 
+								  The task-specific vectors are multiplied together to form another matrix W, and the Hadamard product is used between W and a shared prompt matrix P to generate a task-specific prompt matrix. The task-specific prompts are distilled into a single prompt matrix that is shared across all tasks. This prompt is trained with multitask training.
+				target adaptation - to adapt the single prompt for a target task, a target prompt is initialized 
+									and expressed as the Hadamard product of the shared prompt matrix and the task-specific low-rank prompt matrix.
 		
 	Adapters
 	
 	
-		- Adding Extra layers
+		- Adding Extra layers 
 		
 	Re-Parameterisation 
 	
 		- Decomposing Weight matrixes
 			- LoRA
+				- Decomposing weight matrix into 2 smaller matrices using low rank decomposition rank r.
+				- original matrix will be frozen
+				- new matrices will be updated during training
+				- later, original and new will be added
+				
+				- It can be applied to any weights but attention layers are focussed in HF implementation.
+				
+				W = p * q
+				
+				A = p * r
+				
+				B = r * q
+				
+				result = A * B
+				
 			- LoHa
+			
+				- similar to LoRA, decomposes weight matrxi into 4, and uses hadamard product (i.e. element wise product) instead of matrix product.
+				
+				W = p * q
+				
+				A1 = p * r
+				
+				B1 = r * q
+				
+				interim1 = A1 * B1
+				
+				A2 = p * r
+				
+				B2 = r * q
+				
+				interim2 = A2 * B2
+				
+				result = interim1 (hadamard product) interim2
+				
+				
 			- LoKr
 			
-		- rescaling vectors-
+				- similar to LoRA and LoHa
+				- creates a block matrix which preserves the original matrix weights
+				
+				- decomposes weight matrix into 2, and uses kronecker product (i.e. element wise product) instead of matrix product.
+				
+				W = p * q
+				
+				A = v(p) * r
+				
+				B = r * v(q)
+				
+				C = u(p) * u(q)
+				
+				interim = (A * B)
+				result = C (kronecker product) interim
+			
+		- rescaling vectors
 			- IA3
-		
+				- IA3 weights are learned during fine tuning and added to the outputs of key and value layers, 
+				and to the input of the second feedforward layer in each transformer block.
+				
+				- It can be applied to any as well, but above layers are focussed in HF implementation.
 		
 		- Other Variants
 			- AdaLoRA
