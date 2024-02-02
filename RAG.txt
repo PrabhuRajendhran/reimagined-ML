@@ -1,3 +1,149 @@
 RAG :
 
 	https://vinija.ai/nlp/RAG/
+	
+	RAG Pipeline :
+	
+		Ingestion :
+			Gather Corpus
+			Chunk corpus
+			Index chunked corpus
+			Ingest into Vector DB
+			
+		Retrieval
+			Read User Query
+			Encode 
+			Search against indexed corpus
+			Fetch Top-K
+			
+		Synthesis
+			Pass the retrived context to LLM, along with Prompt
+			Get Responses
+			
+	Ingestion :
+	
+		Chunking [https://www.pinecone.io/learn/chunking-strategies/]
+		
+			Depends on the nature of content(long docs or short messages)
+			embedder model and what chunk size does it perform better
+			query type (short or long)
+			how will the retrieved results be utilized within our application
+			
+		Embeddings [using Sentence Transformers]
+			
+	Retrieval :
+	
+		Naive/Standard approach
+			Corpus divided into chunks
+			same chunks are indexed and retrieved.
+		
+			pros : simple and uniformity
+			cons : not enough context for llms
+			
+		Sentence window / Small to large chunking
+			Corpus divided into chunks
+			chunks are indexed.
+			while retrieved, static window of chunks are added to top k retrived chunk and passed over to llms.
+		
+			pros : enough context for llms
+			cons : complexity;
+				   if added chunks are not comprexive enough, then entire efforts are in vain.
+				   
+				   
+		Auto-merging retrieval / Hierarchical retrieval
+			Corpus divided into chunks
+			chunks are indexed.
+			while retrieved
+			
+			
+			
+		Determining the ideal chunk size for a RAG system is a balancing act that involves considering the characteristics of your data, 
+		the limitations of your retriever model, the resources at your disposal, the specific requirements of your task, and empirical experimentation. 
+		It’s a process that may require iteration and fine-tuning to achieve the best results.
+		
+		Ensembling Strategy can be adopted for chunk sizes as well:
+			- multiple retriever to retrieve chunks of different sizes.
+			- merge them all
+			- rank them using re-ranker
+			
+			
+		Ensembling Strategy can be adopted for search methods as well :
+			- multiple retriever to retrieve chunks using different search methods [keyword, semantic or hybrid]
+			- merge them all
+			- rank them using re-ranker
+		
+		
+		So far, we have talked about exact search, we can use approximate search to improve retriver performance (in terms of speed) and then re-rank.
+			- using vector databases [https://vinija.ai/concepts/ann-similarity-search/]
+			- using custom retrival functions as in SBERT library.
+		
+		
+	Synthesis / Response generation :
+	
+		- pass the retrived context to llms
+		- llms generate output inline with user query.
+		- Thing to Note : 
+			we all knew llms can use long context, but how well it uses long context? 
+			LLMs are lost in the middle i.e. due the nature humans write text [important info in the beginning and in the end].
+			hence, strategically placing retrieved context in the beginning or in the end , helps to improve the model accuracy.
+			
+			We can test the above scenario, using Needle in a Haystack library.
+			
+	
+	Evaluate RAG [Library : RAGAS or TruLens]
+	
+		!!RAGAS Score!!
+	
+		Retrieval :
+		
+			- context relevance : how well context is relavant to query
+			- context recall : how well context is aligned to Ground Truth answer 
+			- context precision : how well relevant context are ranked higher and irrelevant ranked lower.
+			
+			
+		Generation : 
+		
+			- Faithfulness/Groundedness : whether model is answering based on the context or hallucinating
+			- answer relevance : whether the generated answer is relevant to the query
+			
+			
+		end to end :
+		
+			- answer semantic similarity (against Ground Truth answer)
+			- answer factual similarity (against Ground Truth answer)
+	
+	
+	Multi Modal RAG :
+	
+		Option 1 [multi modal embeddings + multi modal llm for synthesis]
+				
+		- use multimodal embeddings for both images and text
+		- retrive 
+		- pass to multimodal llm for synthesis [raw image + text]
+		
+		- Langchain cookbook : https://github.com/langchain-ai/langchain/blob/master/cookbook/multi_modal_RAG_chroma.ipynb
+		
+		Option 2 [multi modal llm for image summary + normal embeddings + multi modal llm for synthesis]
+		
+		- Generate summary for images using multi modal llm
+		- Embed summary generated for images and text
+		- retrive 
+		- pass to multimodal llm for synthesis [raw image + text]
+				
+		- Langchain cookbook : https://github.com/langchain-ai/langchain/blob/master/cookbook/Multi_modal_RAG.ipynb?ref=blog.langchain.dev
+		
+		Option 3 [multi modal llm for image summary + normal embeddings + normal llm for synthesis]
+		
+		- Generate summary for images using multi modal llm
+		- Embed summary generated for images and text
+		- retrive 
+		- pass to normal llm for synthesis [image summary + text]
+				
+				
+	Improving RAG Systems :
+	
+		- Using Re-Ranker 
+		
+		- Using FLARE Rechnique [to actively look up in the internet or other knwledge base when the model's output falls below certain threshold, we can lookup.
+		
+		- Using HyDE approach : Generate response for the query, Embed the response and lookup in embedding space, retrive the top k and pass to llm.

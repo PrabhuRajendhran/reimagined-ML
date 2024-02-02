@@ -6,12 +6,12 @@ Cohere LLM University COURSE : https://docs.cohere.com/docs/llmu
 Cohere Gen AI Series : https://txt.cohere.com/generative-ai-part-1/
 deeplearning.ai courses
 Full Stack LLM : https://fullstackdeeplearning.com/llm-bootcamp/
-Github LLM bootcamp : https://github.com/mlabonne/llm-course
+Mlabonne LLM bootcamp : https://github.com/mlabonne/llm-course
 AIPlanet LLM Bootcamp : https://aiplanet.com/learn/llm-bootcamp/bootcamp-getting-started-essentials
 Analytics Vidhya LLM
-activeloop llm
-https://platform.openai.com/docs/tutorials
-https://platform.openai.com/docs/guides/prompt-engineering
+activeloop llm : https://learn.activeloop.ai/enrollments
+open AI : https://platform.openai.com/docs/tutorials
+open AI : https://platform.openai.com/docs/guides/prompt-engineering
 Full Stack DL : https://fullstackdeeplearning.com/course/
 HF Transformers - https://huggingface.co/learn/nlp-course/chapter0/1?fw=pt
 

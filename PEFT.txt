@@ -1,0 +1,90 @@
+Parameter Efficient Fine Tuning :
+
+AsFarAsIKnow, BERT doesn't make use of gradual unfreezing. 
+Instead, during fine-tuning all model parameters are trainable. 
+It can result in catastrophic forgetting, if you train it for long enough/ large enough learning rate,
+which is why we usually fine tune for 1-2 epochs at a low learning rate.
+When it comes to doing it yourself, you'll should be able to just tweak the number of epochs/train steps 
+and then find which number gives you the best results. 
+InMyOpinion, anymore than a couple epochs will result in overfitting/forgetting.
+
+Hope that helps.
+
+https://vinija.ai/nlp/parameter-efficient-fine-tuning/ [good read with all methods; no code]
+https://huggingface.co/blog/peft [good read but in brief; with code]
+https://github.com/huggingface/peft
+https://github.com/huggingface/peft/tree/main/examples/sequence_classification [code for all methods]
+https://www.leewayhertz.com/parameter-efficient-fine-tuning/ [good read with all methods; no code]
+https://www.kdnuggets.com/overview-of-peft-stateoftheart-parameterefficient-finetuning [only for LoRA with code]
+https://medium.com/@rtales/parameter-efficient-fine-tuning-peft-a-novel-approach-for-fine-tuning-large-language-models-ed9d2bf4acf3 [discussed all methods in brief]
+https://abvijaykumar.medium.com/fine-tuning-llm-parameter-efficient-fine-tuning-peft-lora-qlora-part-1-571a472612c4 [good read for LoRA - detailed]
+https://abvijaykumar.medium.com/fine-tuning-llm-parameter-efficient-fine-tuning-peft-lora-qlora-part-2-d8e23877ac6f [good read for QLoRA - detailed]
+https://markovate.com/blog/parameter-efficient-fine-tuning-peft-of-llms-a-practical-guide/ [good read with all methods; no code]
+https://blog.searce.com/a-guide-to-parameter-efficient-fine-tuning-llm-models-3222d072e701 [only for LoRA with code]
+https://www.linkedin.com/pulse/parameter-efficient-fine-tuning-large-language-models-pankaj-a/ [only for LoRA with code]
+https://www.analyticsvidhya.com/blog/2023/10/llm-fine-tuning-with-peft-techniques/ [only for LoRA + QLoRA with code]
+
+https://harininarasimhan.medium.com/part-1-fine-tuning-using-huggingface-transformers-e3e8de75d748 [fine tuning]
+https://harininarasimhan.medium.com/part-2-overcoming-challenges-with-parameter-efficient-training-25e3f7147cd5 [PEFT - LoRA and QLoRA]
+
+https://medium.com/@ud.chandra/instruction-fine-tuning-llama-2-with-pefts-qlora-method-d6a801ebb19 [Instruction Tuning]
+
+https://stackoverflow.com/questions/76451205/difference-between-instruction-tuning-vs-non-instruction-tuning-large-language-m [instruction vs fine tuning]
+https://newsletter.ruder.io/p/instruction-tuning-vol-1 [instruction vs fine tuning - detailed]
+
+https://heidloff.net/article/introduction-to-prompt-tuning/
+https://huggingface.co/docs/peft/main/en/conceptual_guides/prompting
+https://huggingface.co/spaces/PEFT/causal-language-modeling/blob/main/prefix-tuning-clm.ipynb
+https://github.com/huggingface/notebooks/blob/main/peft_docs/en/clm-prompt-tuning.ipynb
+https://colab.research.google.com/github/huggingface/notebooks/blob/main/peft_docs/en/clm-prompt-tuning.ipynb
+https://huggingface.co/docs/peft/main/en/task_guides/prompt_based_methods?configurations=p-tuning
+
+https://rentry.org/llm-training
+https://github.com/NVIDIA/NeMo/blob/main/tutorials/nlp/Multitask_Prompt_and_PTuning.ipynb
+
+
+https://blog.wordbot.io/ai-artificial-intelligence/prompt-tuning-vs-prefix-tuning-understanding-the-differences-in-nlp-techniques/ [perfect one]
+
+https://huggingface.co/docs/peft/main/en/conceptual_guides/prompting#soft-prompts [perfect one]
+https://huggingface.co/docs/peft/main/en/conceptual_guides/adapter
+https://huggingface.co/docs/peft/main/en/conceptual_guides/ia3
+
+
+https://www.mercity.ai/blog-post/fine-tuning-llms-using-peft-and-lora
+
+
+
+
+	Prompt Methods 
+	
+		Prompt Tuning
+		
+		P Tuning
+		
+		Prefix Tuning
+		
+		Multitask Prompt Tuning
+		
+	Adapters
+	
+	
+		- Adding Extra layers
+		
+	Re-Parameterisation 
+	
+		- Decomposing Weight matrixes
+			- LoRA
+			- LoHa
+			- LoKr
+			
+		- rescaling vectors-
+			- IA3
+		
+		
+		- Other Variants
+			- AdaLoRA
+			- OFT
+			- Llama-Adapter
+			
+		
+		

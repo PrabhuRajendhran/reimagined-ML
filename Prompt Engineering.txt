@@ -2,3 +2,37 @@ Prompt Engineering:
 
 	https://vinija.ai/nlp/prompt-engineering/
 	https://www.tensorops.ai/post/prompt-engineering-techniques-practical-guide
+	https://aman.ai/primers/ai/prompt-engineering/
+	
+	
+	Prompting :
+	
+		Prompts (Text Inputs) -> LLM -> Response
+	
+	Methods :
+	
+		Zero Shot : No example + Only Prompt -> LLM -> Response
+		
+		Few Shot : Few examples + Prompt -> LLM -> Response
+		
+		Chain Of Thought :
+		
+			Zero Shot : No example + Only Prompt [with Let's think steps by step] -> LLM -> Response
+			
+			Few Shot : Few examples with reasoning chains + new question -> LLM -> Response
+			
+			Auto CoT : Auto generate reasoning chains for questions in each cluster + new question -> LLM -> Response
+				- Aims to eliminate the manual effort in providing reasoning chain examples for Few Shot CoT.
+				- 2 step approach :
+					- question clustering
+					- representative sampling from each question clustering and generate its reasoning chain using the below
+						- Zero shot CoT [add "Let's think step by step" template]
+						- provide simple heuristics : length of tokens, number of heuristic steps.
+			
+			Self Consistency
+				- Aims to replace the greedy decoding used in CoT prompting
+				  How?
+				  Sample multiple diverse reasoning paths through Few Shot CoT
+				  and, use the generations to select the most consistent answer.
+				  
+		Tree Of Thought : 
